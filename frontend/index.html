@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1025">
+  <meta name="description" content="Same five things. One perfect order. Play Rank It, a daily ranking puzzle.">
+  <title>Rank It · Daily Ranking Challenge</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/mock-data.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#app">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#/home" aria-label="Rank It home"><svg aria-hidden="true"><use href="assets/art.svg#crown"></use></svg><span>Rank It<span class="brand-dot">.</span></span></a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" data-action="toggle-menu"><span class="menu-lines" aria-hidden="true"></span></button>
+      <div class="header-navigation" id="site-navigation">
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="mobile-home-link" href="#/home" data-nav="home"><span class="nav-icon" aria-hidden="true">⌂</span>Home</a>
+          <a href="#/play" data-nav="play"><span class="nav-icon" aria-hidden="true">↕</span>Play</a>
+          <a href="#/leaderboard" data-nav="leaderboard"><span class="nav-icon" aria-hidden="true"><svg><use href="assets/art.svg#trophy"></use></svg></span>Leaderboard</a>
+          <a href="#/profile" data-nav="profile"><span class="nav-icon" aria-hidden="true"><svg><use href="assets/art.svg#avatar"></use></svg></span>Profile</a>
+          <a href="#/admin" data-nav="admin"><span class="nav-icon" aria-hidden="true">▦</span>Admin</a>
+        </nav>
+        <div class="header-account"><a class="login-link" href="#/login" data-nav="login">Log in</a><a class="button button-small button-purple" href="#/register" data-nav="register">Sign up <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </div>
+  </header>
+  <main id="app" tabindex="-1"><p class="loading">Loading your next challenge…</p></main>
+  <footer class="site-footer"><a class="footer-brand" href="#/home">Rank It.</a><span>One new ranking challenge every day.</span></footer>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="admin-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+</body>
+</html>

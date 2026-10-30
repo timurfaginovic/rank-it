@@ -2,63 +2,100 @@
 
 ## Project Overview
 
-Rank It is a daily ranking game where users have to arrange five items in the correct order. Each correct position gives 20 points, with a maximum of 100 points per game.
+Rank It is a daily ranking game where players arrange five items in the correct order. Each correct position gives 20 points, with a maximum score of 100.
 
-The website includes daily challenges, a leaderboard, user profiles, and an admin panel for managing challenges and users.
+The website includes daily challenges, leaderboards, user profiles, and an admin panel for managing game content.
 
 ## Technologies
 
-The frontend is made using HTML, CSS, and JavaScript.
+- Frontend: HTML, CSS, JavaScript
+- Backend: PHP, PDO, FlightPHP (planned)
+- Database: MySQL
+- Other: REST API, JWT, external API (planned)
 
-For the next milestones, the project will also use:
-- PHP with FlightPHP for the backend
-- MySQL and PDO for the database
-- REST API and JWT for authentication
-- An external API for generating ranking challenges
-
-Milestone 1 only includes the static frontend, project structure, and database planning.
+Milestone 1 covers the frontend and database planning. Milestone 2 adds the MySQL database and PHP DAO classes.
 
 ## Project Structure
 
-The project is divided into three main folders:
+The project is organized into three main folders.
 
-**frontend/** – Contains everything related to the website's appearance and interactions.
+### frontend/
+
+Contains the website interface and functionality.
+
 - `index.html` – Main HTML file
 - `css/` – Styles
-- `js/` – JavaScript code and sample data
-- `views/` – HTML content for different pages
+- `js/` – JavaScript and sample data
+- `views/` – Website pages
 - `assets/` – Images, icons, and fonts
 
-**backend/** – Prepared for future milestones.
-- `routes/` – API routes
-- `services/` – Application logic
+### backend/
+
+Contains the database connection and backend code.
+
+- `config/` – Database configuration
+- `database/` – SQL file and database testing scripts
 - `dao/` – Database operations
-- `middleware/` – Authentication and other checks
-- `config/` – Configuration files
+- `services/` – Business logic
+- `routes/` – API endpoints
+- `middleware/` – Authentication and request handling
 - `logs/` – Application logs
 
-**docs/** – Contains the ERD and AI usage documentation.
+The database and DAO layer are implemented in Milestone 2. The remaining backend functionality will be added in later milestones.
+
+### docs/
+
+Contains the database diagram and required project documentation.
 
 ## How the Website Works
 
-Rank It is a Single Page Application (SPA). This means that users can navigate between pages without reloading the entire website.
+Rank It uses a Single Page Application (SPA) structure. JavaScript handles navigation between pages without reloading the entire website.
 
-JavaScript handles navigation and loads the content of different pages into the main HTML file.
+The frontend currently uses sample data and is not yet connected to the database.
 
-For now, the website uses sample data. The database and backend will be connected in later milestones.
+The layout is responsive and works on desktop and mobile devices.
 
-The same website works on desktop and mobile, with CSS adjusting the layout depending on screen size.
+## Coding Guidelines
 
-## Coding Rules
+- Keep the code simple and easy to understand.
+- Use clear names for variables, functions, and classes.
+- Use camelCase in JavaScript and snake_case for database fields.
+- Keep HTML, CSS, and JavaScript in their appropriate files.
+- Avoid unnecessary libraries and complicated solutions.
+- Only add comments when needed.
+- Keep the existing design and navigation consistent.
+- Make sure changes work on desktop and mobile.
+- Keep passwords and private configuration files out of Git.
+- Test new functionality before committing.
 
-- Keep the code simple, organized, and easy to understand.
-- Use clear names for variables and functions.
-- Use camelCase for JavaScript and snake_case for database fields.
-- Keep HTML, CSS, and JavaScript organized in their appropriate files.
-- Avoid unnecessary libraries and complicated code.
-- Only add comments when they are actually useful.
-- Keep the current design, colors, and logo consistent.
-- Make sure all pages work properly on desktop and mobile.
-- Do not break the SPA navigation when adding or changing pages.
-- Keep passwords and API keys out of GitHub.
-- Test changes before committing them.
+## Database and DAO Guidelines
+
+The database contains five tables: users, challenges, challenge_items, attempts, and attempt_items.
+
+The database structure is documented in `docs/ERD.md`, and the SQL file is located at `backend/database/rank_it.sql`.
+
+The PHP DAO classes are stored in `backend/dao/`.
+
+- `Database.php` handles the MySQL connection using PDO.
+- `BaseDao.php` contains the shared CRUD methods.
+- Each database table has its own DAO class.
+
+Use PDO prepared statements for database queries. Keep table and column names controlled by the DAO classes, and validate which fields can be modified.
+
+The actual database credentials belong in `backend/config/config.php`, which is excluded from Git. The example configuration is stored in `config.example.php`.
+
+Use the verification script in `backend/database/verify.php` to test database operations without permanently changing the sample data.
+
+Do not delete or overwrite existing databases without permission.
+
+## Future Development
+
+Milestone 3 will introduce services, FlightPHP routes, Swagger documentation, and external API integration.
+
+Milestone 4 will add authentication, user permissions, middleware, logging, and frontend-backend integration.
+
+Milestone 5 will focus on final testing, validation, security, and deployment.
+
+Keep the code organized so future functionality can be added without breaking existing features.
+
+Update the required project documentation when changes are made, including `docs/AI_LOG.md` where applicable.

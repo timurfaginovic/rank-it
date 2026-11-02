@@ -1,68 +1,109 @@
 # Rank It – Daily Ranking Challenge
 
-Rank It is a daily ranking puzzle game where players arrange five items in the correct order. Each correct position earns 20 points, with a maximum of 100 points per challenge.
+Rank It is a daily ranking puzzle game where players arrange five items in the correct order. Each correct position gives 20 points, with a maximum of 100 points per challenge.
 
-The website includes daily challenges, leaderboards, player profiles, and an admin panel for managing game content.
+The game includes daily challenges, leaderboards, player profiles, and an admin panel for managing challenges.
 
 ## Technologies
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** PHP with FlightPHP (planned)
-- **Database:** MySQL with PDO (planned)
-- **Other:** REST API, JWT authentication, external API integration (planned)
+- Frontend: HTML, CSS, JavaScript
+- Backend: PHP, PDO (FlightPHP planned)
+- Database: MySQL
+- Other: REST API, JWT, external API (planned)
 
 ## Features
 
-- Daily ranking challenges with five items
-- Drag-and-drop and button-based item ordering
+- Daily ranking challenges
+- Drag-and-drop and button-based ordering
 - Score calculation and results
 - Daily, weekly, and all-time leaderboards
 - Player profiles and challenge history
 - Login and registration pages
-- Admin panel for managing challenges, users, and results
-- Responsive design for desktop and mobile
+- Admin panel
+- Responsive design
 
-Milestone 1 includes the static SPA frontend with sample data. Backend functionality will be added in later milestones.
+The frontend currently uses sample data. Backend integration and authentication will be added in later milestones.
 
-## Database Structure
+## Database
 
-The database is planned around five entities:
+The database consists of five tables:
 
-| Entity | Description |
-|---|---|
-| Users | Player and admin accounts |
-| Challenges | Daily ranking puzzles |
-| Challenge Items | Items belonging to each challenge |
-| Attempts | Player scores for individual challenges |
-| Attempt Items | Answers submitted for each attempt |
+- Users – player and admin accounts
+- Challenges – daily ranking challenges
+- Challenge Items – items that belong to each challenge
+- Attempts – player attempts and scores
+- Attempt Items – submitted answers
 
-A user can have multiple attempts, each challenge contains multiple items and attempts, and each attempt contains multiple submitted items.
+The tables are connected using primary and foreign keys.
 
-The database diagram is available in [docs/ERD.md](docs/ERD.md).
-
-## User Roles
-
-**User:** Play daily challenges, view results, check leaderboards, and access personal history.
-
-**Admin:** Manage users, challenges, challenge items, and player attempts.
-
-Authentication and role permissions will be implemented in later milestones.
-
-## External API
-
-The planned external API will generate suggestions for new ranking challenges. Admins will be able to review and edit generated content before publishing it.
+The database diagram can be found in [docs/ERD.md](docs/ERD.md).
 
 ## Running the Project
 
-1. Open the repository in VS Code.
-2. Install the Live Server extension if needed.
-3. Open `frontend/index.html` using **Open with Live Server**.
-4. The website will open in your browser.
+1. Open the project in VS Code.
+2. Install the Live Server extension.
+3. Open `frontend/index.html` with Live Server.
 
-The frontend uses JavaScript-based SPA navigation, allowing users to switch between pages without full-page reloads.
+The frontend works as a single-page application, so navigation does not reload the entire page.
 
-## Future Development
+## Milestone 2 – Database and DAO
 
-The next milestones will include the MySQL database, PHP backend, authentication, API integration, and deployment.
+Milestone 2 adds the MySQL database and PHP DAO classes for accessing and managing data.
 
-Database import instructions, configuration setup, test accounts, Swagger documentation, and the deployed website link will be added when those features are available.
+### Database Setup
+
+The project requires MySQL and PHP with PDO MySQL enabled.
+
+First, import the SQL file from the project folder:
+
+```bash
+/usr/local/mysql/bin/mysql -u root -p < backend/database/rank_it.sql
+```
+
+The SQL file creates the `rank_it` database and includes the tables and sample data. It should be imported into a new or empty database.
+
+Next, copy `backend/config/config.example.php` to `backend/config/config.php` and enter your local MySQL connection details. The actual configuration file is excluded from Git.
+
+To test the database and DAO classes, run:
+
+```bash
+/Applications/XAMPP/xamppfiles/bin/php backend/database/verify.php
+```
+
+### DAO Classes
+
+The backend includes a `Database.php` class for connecting to MySQL and a reusable `BaseDao.php` class containing the basic CRUD operations.
+
+Each table also has its own DAO class:
+
+- UserDao.php
+- ChallengeDao.php
+- ChallengeItemDao.php
+- AttemptDao.php
+- AttemptItemDao.php
+
+These classes handle creating, reading, updating, and deleting records using PDO prepared statements.
+
+The database includes sample users, challenges, items, and player attempts. All five DAO classes were tested successfully, including database relationships and constraints.
+
+## Project Progress
+
+### Milestone 1 – Completed
+
+Created the frontend SPA with the game pages, leaderboards, profiles, login and registration forms, and admin panel using sample data.
+
+### Milestone 2 – Completed
+
+Created the MySQL database with five related tables, sample data, and PHP DAO classes supporting CRUD operations.
+
+### Milestone 3 – Planned
+
+Business logic, FlightPHP REST API, Swagger documentation, and external API integration.
+
+### Milestone 4 – Planned
+
+JWT authentication, user permissions, middleware, logging, and frontend-backend integration.
+
+### Milestone 5 – Planned
+
+Final testing, validation, security improvements, and deployment.

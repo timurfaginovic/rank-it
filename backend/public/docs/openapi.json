@@ -1,0 +1,2509 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Rank It API",
+    "version": "1.0.0",
+    "description": "Milestone 3 local backend. Authentication and authorization are planned for Milestone 4; these endpoints are currently unprotected. No 401/403 or JWT security is claimed."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "getUserCollection",
+        "summary": "List User",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "postUserCollection",
+        "summary": "Create User",
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              },
+              "example": {
+                "name": "Example player",
+                "email": "player@example.com",
+                "password": "example-pass",
+                "role": "user"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "getUserById",
+        "summary": "Read User",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "patchUserById",
+        "summary": "Update User",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPatch"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "operationId": "deleteUserById",
+        "summary": "Delete User",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Deleted"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges": {
+      "get": {
+        "tags": [
+          "challenges"
+        ],
+        "operationId": "getChallengeCollection",
+        "summary": "List Challenge",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Challenge"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "challenges"
+        ],
+        "operationId": "postChallengeCollection",
+        "summary": "Create Challenge",
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Challenge"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeCreate"
+              },
+              "example": {
+                "title": "Numbers",
+                "description": "Smallest first.",
+                "challenge_date": "2026-11-23",
+                "status": "Draft",
+                "items": [
+                  "10",
+                  "20",
+                  "30",
+                  "40",
+                  "50"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "challenges"
+        ],
+        "operationId": "getChallengeById",
+        "summary": "Read Challenge",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Challenge"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "challenges"
+        ],
+        "operationId": "patchChallengeById",
+        "summary": "Update Challenge",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Challenge"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengePatch"
+              }
+            }
+          }
+        },
+        "description": "Challenges with attempts cannot be edited. An items array replaces items atomically; texts must be unique ignoring letter case. Publication requires positions 1-5 and a date without another published challenge."
+      },
+      "delete": {
+        "tags": [
+          "challenges"
+        ],
+        "operationId": "deleteChallengeById",
+        "summary": "Delete Challenge",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Deleted"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenge-items": {
+      "get": {
+        "tags": [
+          "challenge-items"
+        ],
+        "operationId": "getChallengeItemCollection",
+        "summary": "List ChallengeItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChallengeItem"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "challenge-items"
+        ],
+        "operationId": "postChallengeItemCollection",
+        "summary": "Create ChallengeItem",
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ChallengeItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeItemCreate"
+              },
+              "example": {
+                "challenge_id": 4,
+                "item_text": "One",
+                "correct_position": 1
+              }
+            }
+          }
+        },
+        "description": "Individual writes require an unpublished challenge without attempts. Item text must be unique within that challenge, ignoring letter case."
+      }
+    },
+    "/api/challenge-items/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "challenge-items"
+        ],
+        "operationId": "getChallengeItemById",
+        "summary": "Read ChallengeItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ChallengeItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "challenge-items"
+        ],
+        "operationId": "patchChallengeItemById",
+        "summary": "Update ChallengeItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ChallengeItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeItemPatch"
+              }
+            }
+          }
+        },
+        "description": "Requires an unpublished challenge without attempts. The challenge_id cannot change. Item text must be unique within the challenge, ignoring letter case."
+      },
+      "delete": {
+        "tags": [
+          "challenge-items"
+        ],
+        "operationId": "deleteChallengeItemById",
+        "summary": "Delete ChallengeItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Deleted"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/attempts": {
+      "get": {
+        "tags": [
+          "attempts"
+        ],
+        "operationId": "getAttemptCollection",
+        "summary": "List Attempt",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Attempt"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "attempts"
+        ],
+        "operationId": "postAttemptCollection",
+        "summary": "Create Attempt",
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Attempt"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttemptCreate"
+              },
+              "example": {
+                "user_id": 4,
+                "challenge_id": 4,
+                "ranking": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20
+                ]
+              }
+            }
+          }
+        },
+        "description": "Requires a published challenge and five distinct valid item IDs. Score and timestamp are server-generated. One attempt per user/challenge."
+      }
+    },
+    "/api/attempts/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "attempts"
+        ],
+        "operationId": "getAttemptById",
+        "summary": "Read Attempt",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Attempt"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "attempts"
+        ],
+        "operationId": "patchAttemptById",
+        "summary": "Update Attempt",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Attempt"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttemptPatch"
+              }
+            }
+          }
+        },
+        "description": "Administrative whole-ranking correction for a published challenge. Draft/Pending challenges return 400 without changing the attempt or answers. Recalculates the score atomically and replaces answer IDs. User and challenge cannot change. This is not a replay endpoint."
+      },
+      "delete": {
+        "tags": [
+          "attempts"
+        ],
+        "operationId": "deleteAttemptById",
+        "summary": "Delete Attempt",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Deleted"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/attempt-items": {
+      "get": {
+        "tags": [
+          "attempt-items"
+        ],
+        "operationId": "getAttemptItemCollection",
+        "summary": "List AttemptItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AttemptItem"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "attempt-items"
+        ],
+        "operationId": "postAttemptItemCollection",
+        "summary": "Create AttemptItem",
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AttemptItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttemptItemCreate"
+              },
+              "example": {
+                "attempt_id": 4,
+                "challenge_item_id": 16,
+                "selected_position": 1
+              }
+            }
+          }
+        },
+        "description": "Maintenance CRUD for incomplete attempts only. Individual writes to completed five-answer attempts return 400. The fifth answer computes the score; incomplete records have score zero."
+      }
+    },
+    "/api/attempt-items/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "attempt-items"
+        ],
+        "operationId": "getAttemptItemById",
+        "summary": "Read AttemptItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AttemptItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "attempt-items"
+        ],
+        "operationId": "patchAttemptItemById",
+        "summary": "Update AttemptItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AttemptItem"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttemptItemPatch"
+              }
+            }
+          }
+        },
+        "description": "Maintenance CRUD for incomplete attempts only. Individual writes to completed five-answer attempts return 400. The fifth answer computes the score; incomplete records have score zero."
+      },
+      "delete": {
+        "tags": [
+          "attempt-items"
+        ],
+        "operationId": "deleteAttemptItemById",
+        "summary": "Delete AttemptItem",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Deleted"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource or endpoint not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        },
+        "description": "Maintenance CRUD for incomplete attempts only. Individual writes to completed five-answer attempts return 400. The fifth answer computes the score; incomplete records have score zero."
+      }
+    },
+    "/api/external/population-draft": {
+      "post": {
+        "tags": [
+          "external"
+        ],
+        "operationId": "populationDraft",
+        "summary": "Prepare an unsaved population-ranking draft",
+        "description": "Fixed countries: BIH, HRV, SRB, MNE, SVN. Same requested year, descending population. Review before saving through challenges; no provider key required.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftRequest"
+              },
+              "example": {
+                "year": 2023
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PopulationDraft"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or a protected/related record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server failure; internal details are hidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Provider response was unusable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Provider unavailable or request timed out.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "A clear error message."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "Deleted": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 254,
+            "format": "email"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role"
+        ]
+      },
+      "UserCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 254,
+            "format": "email"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 72,
+            "format": "password",
+            "description": "8\u201372 bytes; null characters are rejected."
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "UserPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 254,
+            "format": "email"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "admin"
+            ]
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 72,
+            "format": "password",
+            "description": "8\u201372 bytes; null characters are rejected."
+          }
+        },
+        "minProperties": 1
+      },
+      "Challenge": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "challenge_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Published"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "description",
+          "challenge_date",
+          "status"
+        ]
+      },
+      "ChallengeCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "challenge_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Published"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "minItems": 5,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "description": "Five distinct texts in correct order, compared after trimming and ignoring letter case. Optional for unpublished challenges."
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "challenge_date"
+        ]
+      },
+      "ChallengePatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "challenge_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft",
+              "Pending",
+              "Published"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "minItems": 5,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "description": "Five distinct texts in correct order, compared after trimming and ignoring letter case. Optional for unpublished challenges."
+          }
+        },
+        "minProperties": 1
+      },
+      "ChallengeItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "challenge_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "item_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "correct_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "id",
+          "challenge_id",
+          "item_text",
+          "correct_position"
+        ]
+      },
+      "ChallengeItemCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "challenge_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "item_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Trimmed text, unique within the challenge ignoring letter case."
+          },
+          "correct_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "challenge_id",
+          "item_text",
+          "correct_position"
+        ]
+      },
+      "ChallengeItemPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "challenge_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295,
+            "description": "May be omitted or repeated unchanged. Moving an item to another challenge is forbidden."
+          },
+          "item_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Trimmed text, unique within the challenge ignoring letter case."
+          },
+          "correct_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "minProperties": 1
+      },
+      "Attempt": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "user_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "challenge_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "score": {
+            "type": "integer",
+            "enum": [
+              0,
+              20,
+              40,
+              60,
+              100
+            ]
+          },
+          "completed_at": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
+            "description": "UTC MySQL DATETIME. Five answer rows determine completion; incomplete maintenance records are unscored."
+          }
+        },
+        "required": [
+          "id",
+          "user_id",
+          "challenge_id",
+          "score",
+          "completed_at"
+        ]
+      },
+      "AttemptCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "challenge_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "ranking": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4294967295
+            },
+            "minItems": 5,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "description": "All five IDs from this challenge, ordered by the player\u2019s selected positions 1\u20135."
+          }
+        },
+        "required": [
+          "user_id",
+          "challenge_id",
+          "ranking"
+        ]
+      },
+      "AttemptPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ranking": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4294967295
+            },
+            "minItems": 5,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "description": "All five IDs from this challenge, ordered by the player\u2019s selected positions 1\u20135."
+          }
+        },
+        "required": [
+          "ranking"
+        ]
+      },
+      "AttemptItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "attempt_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "challenge_item_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "selected_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "id",
+          "attempt_id",
+          "challenge_item_id",
+          "selected_position"
+        ]
+      },
+      "AttemptItemCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attempt_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295,
+            "description": "A positive JSON integer, not a string. Invalid types or values return 400; a missing parent attempt returns 404."
+          },
+          "challenge_item_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "selected_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "required": [
+          "attempt_id",
+          "challenge_item_id",
+          "selected_position"
+        ]
+      },
+      "AttemptItemPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "challenge_item_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4294967295
+          },
+          "selected_position": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          }
+        },
+        "minProperties": 1
+      },
+      "DraftRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "year": {
+            "type": "integer",
+            "minimum": 1960,
+            "description": "Must not be later than the current year.",
+            "example": 2023
+          }
+        },
+        "required": [
+          "year"
+        ]
+      },
+      "PopulationDraft": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Draft"
+            ]
+          },
+          "year": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "item_text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100
+                },
+                "population": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "correct_position": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 5
+                }
+              },
+              "required": [
+                "item_text",
+                "population",
+                "correct_position"
+              ]
+            }
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "indicator": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "name",
+              "indicator",
+              "url"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "status",
+          "year",
+          "items",
+          "source"
+        ]
+      }
+    }
+  }
+}

@@ -67,3 +67,31 @@ An initial update test used the ID field instead of an editable field. The test 
 The database was successfully imported into MySQL, and CRUD operations were tested for all five entities. The SQL structure, relationships, sample data and PHP classes were reviewed against the Milestone 2 requirements.
 
 The existing frontend remained unchanged, and the backend is ready for the next milestone.
+
+## Milestone 3 - November 2026
+
+### AI Tools Used
+- Codex: Coding assistance, testing, debugging and documentation review.
+
+### How AI Was Used
+
+I continued developing Rank It using the database structure and DAO classes from the previous milestones. Codex was used as a coding assistant during Milestone 3, helping with the service layer, API routes, Swagger documentation and external API integration.
+
+It was also used to test the backend, identify errors and suggest corrections. The existing frontend, database design and previous milestone work were preserved.
+
+### Key Prompts
+- Review the backend and check that all Milestone 3 requirements are covered.
+- Test API endpoints, validation and scoring, and identify possible errors.
+- Fix the issues found during testing without changing existing functionality.
+
+### Issues and Corrections
+
+1. **Invalid ID handling:** During testing, some invalid attempt IDs caused a server error (500) instead of returning 400. The input validation was corrected, and additional tests confirmed that invalid IDs were handled properly.
+
+2. **Challenge publication:** A code review found that ranking updates could be completed for unpublished challenges. A publication check was added, and tests confirmed that Draft and Pending challenges were rejected.
+
+3. **Date validation:** An invalid date caused an unexpected server error. This was found through API testing, and the date validation was updated to return the correct response.
+
+### Final Review
+
+The services and API endpoints were checked for CRUD operations, validation, scoring and database relationships. Swagger and the World Bank API integration were also tested.

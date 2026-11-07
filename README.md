@@ -7,9 +7,9 @@ The game includes daily challenges, leaderboards, player profiles, and an admin 
 ## Technologies
 
 - Frontend: HTML, CSS, JavaScript
-- Backend: PHP, PDO (FlightPHP planned)
+- Backend: PHP, PDO and FlightPHP
 - Database: MySQL
-- Other: REST API, JWT, external API (planned)
+- Other: OpenAPI/Swagger and World Bank API; JWT planned for M4
 
 ## Features
 
@@ -34,13 +34,13 @@ The database consists of five tables:
 - Attempts – player attempts and scores
 - Attempt Items – submitted answers
 
-The tables are connected using primary and foreign keys.
+A user can submit many attempts. Each challenge has its own items and receives attempts. Each attempt stores the player's selected order in attempt items, which reference the challenge items.
 
 The database diagram can be found in [docs/ERD.md](docs/ERD.md).
 
 ## Running the Project
 
-1. Open the project in VS Code.
+1. Open `frontend/` in VS Code so Live Server serves only the frontend directory.
 2. Install the Live Server extension.
 3. Open `frontend/index.html` with Live Server.
 
@@ -57,7 +57,7 @@ The project requires MySQL and PHP with PDO MySQL enabled.
 First, import the SQL file from the project folder:
 
 ```bash
-/usr/local/mysql/bin/mysql -u root -p < backend/database/rank_it.sql
+/usr/local/mysql/bin/mysql --protocol=TCP -h 127.0.0.1 -P 3306 -u root -p < backend/database/rank_it.sql
 ```
 
 The SQL file creates the `rank_it` database and includes the tables and sample data. It should be imported into a new or empty database.
@@ -86,24 +86,36 @@ These classes handle creating, reading, updating, and deleting records using PDO
 
 The database includes sample users, challenges, items, and player attempts. All five DAO classes were tested successfully, including database relationships and constraints.
 
-## Project Progress
+## Milestone 3 - Backend API
 
-### Milestone 1 – Completed
+Milestone 3 adds the service layer, FlightPHP routes, OpenAPI documentation, and external API integration.
 
-Created the frontend SPA with the game pages, leaderboards, profiles, login and registration forms, and admin panel using sample data.
+### Services and Routes
 
-### Milestone 2 – Completed
+Each of the five database entities has its own service and CRUD endpoints. Services handle validation and game rules, while routes process requests and return JSON responses.
 
-Created the MySQL database with five related tables, sample data, and PHP DAO classes supporting CRUD operations.
+The backend also handles ranking submissions, calculates scores, and checks that challenges and attempts follow the game rules.
 
-### Milestone 3 – Planned
+### OpenAPI and Swagger
 
-Business logic, FlightPHP REST API, Swagger documentation, and external API integration.
+All API endpoints are documented using OpenAPI and can be viewed and tested through Swagger.
 
-### Milestone 4 – Planned
+Swagger is available locally at `http://127.0.0.1:8000/docs/`.
 
-JWT authentication, user permissions, middleware, logging, and frontend-backend integration.
+### External API
 
-### Milestone 5 – Planned
+The project uses the World Bank API to generate population-based ranking challenges. It retrieves population data for five countries and prepares them in the correct order.
 
-Final testing, validation, security improvements, and deployment.
+The integration also handles connection errors, timeouts, and missing data.
+
+### Backend Setup
+
+After setting up the database, install the PHP dependencies using Composer and start the local backend server.
+
+The backend uses FlightPHP and requires PHP with PDO MySQL and cURL enabled.
+
+### Testing
+
+The backend was tested for CRUD operations, validation, scoring, database relationships, and external API errors.
+
+All five services and 25 CRUD operations were verified successfully. The existing frontend and database structure remain unchanged.

@@ -20,4 +20,11 @@ class AttemptItemDao extends BaseDao
             throw new InvalidArgumentException('The answer item must belong to the attempt challenge.');
         }
     }
+
+    public function getByAttemptId(int $id): array
+    {
+        $statement = $this->connection->prepare('SELECT * FROM attempt_items WHERE attempt_id = :id ORDER BY selected_position');
+        $statement->execute(['id' => $id]);
+        return $statement->fetchAll();
+    }
 }

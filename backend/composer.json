@@ -1,0 +1,17 @@
+{
+    "name": "rank-it/backend",
+    "description": "Rank It Milestone 3 API",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-curl": "*",
+        "ext-mbstring": "*",
+        "flightphp/core": "^3.0"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "allow-plugins": false
+    }
+}

@@ -20,4 +20,25 @@ class AttemptDao extends BaseDao
             throw new InvalidArgumentException('The existing answers belong to another challenge.');
         }
     }
+
+    public function getByChallengeId(int $id): array
+    {
+        $statement = $this->connection->prepare('SELECT * FROM attempts WHERE challenge_id = :id ORDER BY id');
+        $statement->execute(['id' => $id]);
+        return $statement->fetchAll();
+    }
+
+    public function getByUserAndChallenge(int $userId, int $challengeId): ?array
+    {
+        $statement = $this->connection->prepare('SELECT * FROM attempts WHERE user_id = :user_id AND challenge_id = :challenge_id');
+        $statement->execute(['user_id' => $userId, 'challenge_id' => $challengeId]);
+        return $statement->fetch() ?: null;
+    }
+
+    public function getByIdForUpdate(int $id): ?array
+    {
+        $statement = $this->connection->prepare('SELECT * FROM attempts WHERE id = :id FOR UPDATE');
+        $statement->execute(['id' => $id]);
+        return $statement->fetch() ?: null;
+    }
 }

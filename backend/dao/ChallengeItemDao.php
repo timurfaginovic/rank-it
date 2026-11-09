@@ -20,4 +20,11 @@ class ChallengeItemDao extends BaseDao
             throw new InvalidArgumentException('This item is referenced by attempts for another challenge.');
         }
     }
+
+    public function getByChallengeId(int $id): array
+    {
+        $statement = $this->connection->prepare('SELECT * FROM challenge_items WHERE challenge_id = :id ORDER BY correct_position');
+        $statement->execute(['id' => $id]);
+        return $statement->fetchAll();
+    }
 }
